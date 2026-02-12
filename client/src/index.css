@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Google Fonts Import for Living Memorial Theme */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap');
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -43,39 +46,40 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
+  /* Living Memorial Theme - Warm Earth Tones */
+  --primary: #C85A3A; /* Terracotta */
+  --primary-foreground: #FAF8F5; /* Off-white */
+  --sidebar-primary: #C85A3A;
+  --sidebar-primary-foreground: #FAF8F5;
+  --chart-1: #C85A3A;
+  --chart-2: #D4A574;
+  --chart-3: #A8B8A8;
+  --chart-4: #8B7355;
+  --chart-5: #6B5344;
   --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  --background: #FAF8F5; /* Warm cream */
+  --foreground: #4A3728; /* Warm brown */
+  --card: #FFFFFF;
+  --card-foreground: #4A3728;
+  --popover: #FFFFFF;
+  --popover-foreground: #4A3728;
+  --secondary: #A8B8A8; /* Soft sage */
+  --secondary-foreground: #4A3728;
+  --muted: #E8DDD5;
+  --muted-foreground: #8B7355;
+  --accent: #D4A574; /* Gold */
+  --accent-foreground: #4A3728;
+  --destructive: #C85A3A;
+  --destructive-foreground: #FAF8F5;
+  --border: #E8DDD5;
+  --input: #FFFFFF;
+  --ring: #C85A3A;
+  --sidebar: #FAF8F5;
+  --sidebar-foreground: #4A3728;
+  --sidebar-accent: #C85A3A;
+  --sidebar-accent-foreground: #FAF8F5;
+  --sidebar-border: #E8DDD5;
+  --sidebar-ring: #C85A3A;
 }
 
 .dark {
@@ -119,6 +123,26 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
