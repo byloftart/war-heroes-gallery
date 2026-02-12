@@ -6,6 +6,7 @@
 
 import { useEffect, useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { translations } from '@/lib/translations';
 import type { HeroPhoto } from '@/../../shared/types';
 
 interface PhotoModalProps {
@@ -59,7 +60,7 @@ export function PhotoModal({
         <button
           onClick={onClose}
           className="rounded-lg p-2 text-white transition-colors hover:bg-white/10"
-          aria-label="Close"
+          aria-label={translations.photoModal.closeButton}
         >
           <X size={24} />
         </button>
@@ -72,7 +73,7 @@ export function PhotoModal({
           <button
             onClick={onPrevious}
             className="absolute left-4 top-1/2 -translate-y-1/2 rounded-lg bg-white/10 p-3 text-white transition-colors hover:bg-white/20"
-            aria-label="Previous photo"
+            aria-label={translations.photoModal.previousButton}
           >
             <ChevronLeft size={24} />
           </button>
@@ -97,7 +98,7 @@ export function PhotoModal({
           <button
             onClick={onNext}
             className="absolute right-4 top-1/2 -translate-y-1/2 rounded-lg bg-white/10 p-3 text-white transition-colors hover:bg-white/20"
-            aria-label="Next photo"
+            aria-label={translations.photoModal.nextButton}
           >
             <ChevronRight size={24} />
           </button>

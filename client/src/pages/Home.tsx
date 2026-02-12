@@ -10,6 +10,7 @@ import { PhotoModal } from '@/components/PhotoModal';
 import { SearchBar } from '@/components/SearchBar';
 import { EmptyState } from '@/components/EmptyState';
 import { useGallery } from '@/hooks/useGallery';
+import { translations } from '@/lib/translations';
 import type { HeroPhoto } from '@/../../shared/types';
 
 // Sample data - Replace with your actual photos
@@ -19,55 +20,55 @@ const SAMPLE_PHOTOS: HeroPhoto[] = [
     name: 'John Smith',
     imageUrl:
       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-    rank: 'Captain',
+    rank: 'Kapitan',
     unit: '101st Airborne Division',
     birthYear: 1920,
     deathYear: 1945,
-    tags: ['Airborne', 'Europe'],
+    tags: ['Airborne', 'Avropa'],
   },
   {
     id: '2',
     name: 'James Wilson',
     imageUrl:
       'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
-    rank: 'Lieutenant',
-    unit: 'Pacific Fleet',
+    rank: 'Leytenant',
+    unit: 'Sakit Donanması',
     birthYear: 1918,
     deathYear: 1944,
-    tags: ['Navy', 'Pacific'],
+    tags: ['Donanma', 'Sakit Okeanı'],
   },
   {
     id: '3',
     name: 'Robert Johnson',
     imageUrl:
       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-    rank: 'Sergeant',
+    rank: 'Serjant',
     unit: '3rd Army',
     birthYear: 1922,
     deathYear: 1945,
-    tags: ['Army', 'Europe'],
+    tags: ['Ordu', 'Avropa'],
   },
   {
     id: '4',
     name: 'Michael Brown',
     imageUrl:
       'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
-    rank: 'Corporal',
-    unit: 'Marine Corps',
+    rank: 'Korporal',
+    unit: 'Dəniz Piyadaları',
     birthYear: 1923,
     deathYear: 1943,
-    tags: ['Marines', 'Pacific'],
+    tags: ['Dəniz Piyadaları', 'Sakit Okeanı'],
   },
   {
     id: '5',
     name: 'David Lee',
     imageUrl:
       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-    rank: 'Private First Class',
+    rank: 'Birinci Sınıf Əsgər',
     unit: '82nd Airborne Division',
     birthYear: 1925,
     deathYear: 1944,
-    tags: ['Airborne', 'Europe'],
+    tags: ['Airborne', 'Avropa'],
   },
   {
     id: '6',
@@ -78,7 +79,7 @@ const SAMPLE_PHOTOS: HeroPhoto[] = [
     unit: '8th Air Force',
     birthYear: 1915,
     deathYear: 1945,
-    tags: ['Air Force', 'Europe'],
+    tags: ['Hava Qüvvələri', 'Avropa'],
   },
 ];
 
@@ -132,10 +133,10 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="container relative z-10 mx-auto max-w-4xl px-4 text-center">
           <h1 className="mb-4 text-4xl font-bold text-white drop-shadow-lg sm:text-5xl">
-            War Heroes Gallery
+            {translations.title}
           </h1>
           <p className="text-lg text-amber-50 drop-shadow-md">
-            Honoring the restored memories of World War II heroes
+            {translations.subtitle}
           </p>
         </div>
       </div>
@@ -184,10 +185,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-amber-200 bg-white py-8 text-center text-sm text-amber-700">
-        <p>
-          Restored historical photographs. Honoring the service and sacrifice of
-          World War II veterans.
-        </p>
+        <p>{translations.footer}</p>
       </footer>
     </div>
   );

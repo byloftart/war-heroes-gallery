@@ -4,6 +4,8 @@
  * Living Memorial Theme - Respectful, helpful messaging
  */
 
+import { translations } from '@/lib/translations';
+
 interface EmptyStateProps {
   searchQuery: string;
   onClear: () => void;
@@ -16,7 +18,7 @@ export function EmptyState({ searchQuery, onClear }: EmptyStateProps) {
       <div className="h-32 w-32 rounded-full bg-amber-50 flex items-center justify-center">
         <img
           src="https://private-us-east-1.manuscdn.com/sessionFile/nRVQmU80SmnqDYPjtJEcyp/sandbox/1W5LoRDDuuKVM95GXKcytt-img-3_1770891158000_na1fn_ZW1wdHktc3RhdGUtaWxsdXN0cmF0aW9u.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80"
-          alt="No results"
+          alt="Nəticə yoxdur"
           className="h-full w-full object-contain"
         />
       </div>
@@ -24,10 +26,10 @@ export function EmptyState({ searchQuery, onClear }: EmptyStateProps) {
       {/* Message */}
       <div className="space-y-2">
         <h3 className="text-xl font-semibold text-amber-900">
-          No results found
+          {translations.emptyState.title}
         </h3>
         <p className="text-amber-700">
-          We could not find anyone matching "{searchQuery}".
+          "{searchQuery}" axtarışına uyğun heç kim tapılmadı.
         </p>
       </div>
 
@@ -41,7 +43,7 @@ export function EmptyState({ searchQuery, onClear }: EmptyStateProps) {
           active:scale-95
         "
       >
-        Clear search
+        {translations.emptyState.clearButton}
       </button>
     </div>
   );

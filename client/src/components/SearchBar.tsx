@@ -6,18 +6,17 @@
 
 import { useState } from 'react';
 import { Search, X } from 'lucide-react';
+import { translations } from '@/lib/translations';
 
 interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
-  placeholder?: string;
   totalResults?: number;
 }
 
 export function SearchBar({
   value,
   onChange,
-  placeholder = 'Search by name, rank, or unit...',
   totalResults,
 }: SearchBarProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -47,16 +46,16 @@ export function SearchBar({
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          placeholder={placeholder}
+          placeholder={translations.searchPlaceholder}
           className="flex-1 bg-transparent py-3 text-amber-900 placeholder-amber-400 outline-none"
-          aria-label="Search photos"
+          aria-label="Şəkilləri axtarış edin"
         />
 
         {value && (
           <button
             onClick={() => onChange('')}
             className="mr-2 rounded p-1 text-amber-600 transition-colors hover:bg-amber-50"
-            aria-label="Clear search"
+            aria-label="Axtarışı təmizlə"
           >
             <X size={18} />
           </button>
@@ -67,8 +66,8 @@ export function SearchBar({
       {value && totalResults !== undefined && (
         <p className="mt-2 text-sm text-amber-700">
           {totalResults === 0
-            ? 'No results found'
-            : `Found ${totalResults} ${totalResults === 1 ? 'person' : 'people'}`}
+            ? translations.searchResults.noResults
+            : `${translations.searchResults.found} ${totalResults} ${totalResults === 1 ? translations.searchResults.person : translations.searchResults.people}`}
         </p>
       )}
     </div>
