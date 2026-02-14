@@ -1,14 +1,8 @@
-/**
- * PhotoCard Component
- * Displays a single hero photo with name and metadata
- * Living Memorial Theme - Warm, respectful presentation
- */
-
 import { useState } from 'react';
-import type { HeroPhoto } from '@/../../shared/types';
+import type { HeroPhotoLite } from '@/../../shared/types';
 
 interface PhotoCardProps {
-  photo: HeroPhoto;
+  photo: HeroPhotoLite;
   onClick?: (photoId: string) => void;
   isSelected?: boolean;
 }
@@ -19,11 +13,12 @@ export function PhotoCard({
   isSelected = false,
 }: PhotoCardProps) {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const { firstLine, secondLine } = splitName(photo.name);
 
   return (
-    <div
+    <article
       className={`
-        group relative overflow-hidden rounded-lg bg-white
+        group relative overflow-hidden rounded-xl bg-white
         transition-all duration-300 ease-out
         hover:shadow-lg hover:shadow-amber-900/20
         ${isSelected ? 'ring-2 ring-amber-700' : ''}
@@ -38,12 +33,13 @@ export function PhotoCard({
       }}
     >
       {/* Image Container */}
-      <div className="relative aspect-square overflow-hidden bg-gray-100">
+      <div className="relative aspect-square overflow-hidden bg-amber-50 p-2">
         <img
           src={photo.imageUrl}
           alt={photo.name}
+          sizes="(max-width: 767px) 50vw, (max-width: 1200px) 33vw, 25vw"
           className={`
-            h-full w-full object-cover
+            h-full w-full object-contain
             transition-transform duration-500 ease-out
             ${isImageLoaded ? 'scale-100' : 'scale-105'}
             group-hover:scale-105
@@ -56,43 +52,38 @@ export function PhotoCard({
         <div className="absolute inset-0 bg-gradient-to-t from-amber-900/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       </div>
 
-      {/* Info Section */}
-      <div className="space-y-2 p-4">
-        <h3 className="text-base font-semibold text-amber-900 line-clamp-2">
-          {photo.name}
+      <div className="flex min-h-24 items-center justify-center p-4">
+        <h3 className="flex flex-col items-center justify-center text-center text-lg font-semibold leading-snug text-amber-900 sm:text-xl">
+          <span>{firstLine}</span>
+          <span className="text-base sm:text-lg">{secondLine}</span>
         </h3>
-
-        {/* Metadata */}
-        {(photo.rank || photo.unit) && (
-          <div className="space-y-1 text-sm text-amber-700">
-            {photo.rank && <p>{photo.rank}</p>}
-            {photo.unit && <p className="text-xs text-amber-600">{photo.unit}</p>}
-          </div>
-        )}
-
-        {/* Years */}
-        {(photo.birthYear || photo.deathYear) && (
-          <p className="text-xs text-amber-600">
-            {photo.birthYear && `${photo.birthYear}`}
-            {photo.birthYear && photo.deathYear && ' – '}
-            {photo.deathYear && `${photo.deathYear}`}
-          </p>
-        )}
-
-        {/* Tags */}
-        {photo.tags && photo.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1 pt-2">
-            {photo.tags.slice(0, 2).map((tag) => (
-              <span
-                key={tag}
-                className="inline-block rounded-full bg-amber-100 px-2 py-1 text-xs text-amber-700"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
       </div>
-    </div>
+    </article>
   );
+}
+
+function splitName(fullName: string): { firstLine: string; secondLine: string } {
+  const tokens = fullName.replace(/\s+/g, ' ').trim().split(' ').filter(Boolean);
+  if (tokens.length <= 2) {
+    return { firstLine: fullName, secondLine: '' };
+  }
+
+  const normalize = (value: string) =>
+    value
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '');
+
+  const ogluIndex = tokens.findIndex((token) => normalize(token) === 'oglu');
+  if (ogluIndex >= 1) {
+    const firstLine = tokens.slice(0, 2).join(' ');
+    const fatherName = tokens[ogluIndex - 1];
+    return { firstLine, secondLine: `${fatherName} oğlu` };
+  }
+
+  return {
+    firstLine: tokens.slice(0, 2).join(' '),
+    secondLine: tokens.slice(2).join(' '),
+  };
 }

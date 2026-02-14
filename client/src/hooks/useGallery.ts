@@ -1,13 +1,7 @@
-/**
- * useGallery Hook
- * Manages photo gallery state and search functionality
- * Living Memorial Theme
- */
-
 import { useState, useCallback, useMemo } from 'react';
-import type { HeroPhoto } from '@/../../shared/types';
+import type { HeroPhotoLite } from '@/../../shared/types';
 
-export function useGallery(initialPhotos: HeroPhoto[]) {
+export function useGallery(initialPhotos: HeroPhotoLite[]) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPhotoId, setSelectedPhotoId] = useState<string | undefined>();
 
@@ -17,16 +11,7 @@ export function useGallery(initialPhotos: HeroPhoto[]) {
     }
 
     const query = searchQuery.toLowerCase();
-    return initialPhotos.filter((photo) => {
-      const nameMatch = photo.name.toLowerCase().includes(query);
-      const rankMatch = photo.rank?.toLowerCase().includes(query);
-      const unitMatch = photo.unit?.toLowerCase().includes(query);
-      const tagsMatch = photo.tags?.some((tag) =>
-        tag.toLowerCase().includes(query)
-      );
-
-      return nameMatch || rankMatch || unitMatch || tagsMatch;
-    });
+    return initialPhotos.filter((photo) => photo.name.toLowerCase().includes(query));
   }, [initialPhotos, searchQuery]);
 
   const handleSearch = useCallback((query: string) => {

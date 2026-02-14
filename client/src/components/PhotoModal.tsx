@@ -1,17 +1,11 @@
-/**
- * PhotoModal Component
- * Full-screen photo viewer with navigation
- * Living Memorial Theme - Respectful, immersive experience
- */
-
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { translations } from '@/lib/translations';
-import type { HeroPhoto } from '@/../../shared/types';
+import type { HeroPhotoLite } from '@/../../shared/types';
 
 interface PhotoModalProps {
-  photo: HeroPhoto;
-  allPhotos: HeroPhoto[];
+  photo: HeroPhotoLite;
+  allPhotos: HeroPhotoLite[];
   onClose: () => void;
   onNext?: () => void;
   onPrevious?: () => void;
@@ -25,6 +19,7 @@ export function PhotoModal({
   onPrevious,
 }: PhotoModalProps) {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const startX = useRef<number | null>(null);
   const currentIndex = allPhotos.findIndex((p) => p.id === photo.id);
   const hasNext = currentIndex < allPhotos.length - 1;
   const hasPrevious = currentIndex > 0;
@@ -45,17 +40,33 @@ export function PhotoModal({
     };
   }, [onClose, onNext, onPrevious, hasNext, hasPrevious]);
 
+  const onTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    startX.current = event.touches[0]?.clientX ?? null;
+  };
+
+  const onTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (startX.current === null) return;
+    const endX = event.changedTouches[0]?.clientX ?? startX.current;
+    const delta = endX - startX.current;
+    startX.current = null;
+
+    if (Math.abs(delta) < 45) return;
+    if (delta < 0 && hasNext) onNext?.();
+    if (delta > 0 && hasPrevious) onPrevious?.();
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-black/80 backdrop-blur-sm">
+    <div
+      className="fixed inset-0 z-50 flex flex-col bg-black/85 backdrop-blur-sm"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/10 bg-black/40 px-4 py-4 sm:px-6">
         <div className="flex-1">
           <h2 className="text-lg font-semibold text-white sm:text-xl">
             {photo.name}
           </h2>
-          {photo.rank && (
-            <p className="text-sm text-amber-200">{photo.rank}</p>
-          )}
         </div>
         <button
           onClick={onClose}
@@ -67,12 +78,12 @@ export function PhotoModal({
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-1 items-center justify-center overflow-hidden px-4 py-6 sm:px-6">
+      <div className="flex flex-1 items-center justify-center overflow-hidden px-14 py-6 sm:px-20">
         {/* Previous Button */}
         {hasPrevious && (
           <button
             onClick={onPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-lg bg-white/10 p-3 text-white transition-colors hover:bg-white/20"
+            className="absolute left-3 top-1/2 z-30 -translate-y-1/2 rounded-lg bg-black/55 p-3 text-white transition-colors hover:bg-black/75"
             aria-label={translations.photoModal.previousButton}
           >
             <ChevronLeft size={24} />
@@ -97,7 +108,7 @@ export function PhotoModal({
         {hasNext && (
           <button
             onClick={onNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-lg bg-white/10 p-3 text-white transition-colors hover:bg-white/20"
+            className="absolute right-3 top-1/2 z-30 -translate-y-1/2 rounded-lg bg-black/55 p-3 text-white transition-colors hover:bg-black/75"
             aria-label={translations.photoModal.nextButton}
           >
             <ChevronRight size={24} />
@@ -105,27 +116,8 @@ export function PhotoModal({
         )}
       </div>
 
-      {/* Footer with Info */}
       <div className="border-t border-white/10 bg-black/40 px-4 py-4 sm:px-6">
-        <div className="mx-auto max-w-2xl space-y-2">
-          {photo.description && (
-            <p className="text-sm text-gray-300">{photo.description}</p>
-          )}
-
-          {(photo.unit || photo.birthYear || photo.deathYear) && (
-            <div className="flex flex-wrap gap-4 text-sm text-amber-200">
-              {photo.unit && <span>{photo.unit}</span>}
-              {(photo.birthYear || photo.deathYear) && (
-                <span>
-                  {photo.birthYear && `${photo.birthYear}`}
-                  {photo.birthYear && photo.deathYear && ' – '}
-                  {photo.deathYear && `${photo.deathYear}`}
-                </span>
-              )}
-            </div>
-          )}
-
-          {/* Counter */}
+        <div className="mx-auto max-w-2xl">
           <p className="text-xs text-gray-400">
             {currentIndex + 1} / {allPhotos.length}
           </p>

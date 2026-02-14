@@ -1,9 +1,3 @@
-/**
- * SearchBar Component
- * Search functionality for hero names and metadata
- * Living Memorial Theme - Clean, accessible search
- */
-
 import { useState } from 'react';
 import { Search, X } from 'lucide-react';
 import { translations } from '@/lib/translations';
@@ -48,14 +42,14 @@ export function SearchBar({
           onBlur={() => setIsFocused(false)}
           placeholder={translations.searchPlaceholder}
           className="flex-1 bg-transparent py-3 text-amber-900 placeholder-amber-400 outline-none"
-          aria-label="Şəkilləri axtarış edin"
+          aria-label="Ad ilə axtarış"
         />
 
         {value && (
           <button
             onClick={() => onChange('')}
             className="mr-2 rounded p-1 text-amber-600 transition-colors hover:bg-amber-50"
-            aria-label="Axtarışı təmizlə"
+            aria-label={translations.emptyState.clearButton}
           >
             <X size={18} />
           </button>
